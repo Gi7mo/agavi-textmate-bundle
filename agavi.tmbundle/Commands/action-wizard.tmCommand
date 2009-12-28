@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>require_cmd agavi
+require_cmd grep
+require_cmd sed
+
+modulenames () {
+	agavi --logger phing.listener.DefaultLogger module-list | grep "agavi.display-modules" | sed "s/\[agavi\.display-modules\] //"
+}
+
+modulename=$(osascript &lt;&lt;-APPLESCRIPT
+    tell app "TextMate"
+        activate
+        set AppleScript's text item delimiters to "
+"
+        set someText to "$(modulenames)"
+        set someText to someText's text items
+        choose from list someText with title "Select module" with prompt "Select module"
+    end tell
+APPLESCRIPT)
+
+[[ $(head -n1 &lt;&lt;&lt;"$modulename") == false ]] &amp;&amp; exit_discard
+
+actioname=$(CocoaDialog inputbox --title "action name" \
+    --informative-text "please enter the action name:" \
+    --button1 "Okay" --button2 "Cancel")
+
+[[ $(head -n1 &lt;&lt;&lt;"$actioname") == "2" ]] &amp;&amp; exit_discard
+
+actioname=$(tail -n1 &lt;&lt;&lt;"$actioname")
+
+viewname=$(CocoaDialog inputbox --title "view name" \
+    --informative-text "name of the view:" \
+    --button1 "Okay" --button2 "Cancel")
+
+[[ $(head -n1 &lt;&lt;&lt;"$viewname") == "2" ]] &amp;&amp; exit_discard
+
+viewname=$(tail -n1 &lt;&lt;&lt;"$viewname")
+
+cd "$TM_PROJECT_DIRECTORY"
+agavi -D module.name "$modulename" -D action.name "$actioname" --logger phing.listener.DefaultLogger action-create
+agavi -D module.name "$modulename" -D action.name "$actioname" -D view.name "$viewname" --logger phing.listener.DefaultLogger view-create
+agavi -D module.name "$modulename" -D action.name "$actioname" -D view.name "$viewname" --logger phing.listener.DefaultLogger view-template-create
+
+rescan_project</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@A</string>
+	<key>name</key>
+	<string>action-wizard</string>
+	<key>output</key>
+	<string>openAsNewDocument</string>
+	<key>uuid</key>
+	<string>9A99F82F-DB0C-47F6-89DB-5A5196D34601</string>
+</dict>
+</plist>

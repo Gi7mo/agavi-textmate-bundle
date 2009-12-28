@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>require_cmd agavi
+
+cd "$TM_PROJECT_DIRECTORY"
+agavi --logger phing.listener.DefaultLogger project-cache-remove
+
+rescan_project</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@A</string>
+	<key>name</key>
+	<string>project-cache-remove</string>
+	<key>output</key>
+	<string>openAsNewDocument</string>
+	<key>uuid</key>
+	<string>2D68FD61-A2C2-46E7-ADF8-7025C12C7B0C</string>
+</dict>
+</plist>

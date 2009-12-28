@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>contactEmailRot13</key>
+	<string>textmate@gi7mo.org</string>
+	<key>contactName</key>
+	<string>Sven Schollmeyer</string>
+	<key>description</key>
+	<string>This bundle give's you easy access to agavi's build script abilities.</string>
+	<key>mainMenu</key>
+	<dict>
+		<key>items</key>
+		<array>
+			<string>9A99F82F-DB0C-47F6-89DB-5A5196D34601</string>
+			<string>852E3F33-5DF2-4192-A603-1227510AE15A</string>
+			<string>------------------------------------</string>
+			<string>FB719929-554A-4FDC-9C6A-82184E6CC948</string>
+			<string>F187F0C7-F11A-4C55-8E39-A2E15BF20C42</string>
+			<string>2D68FD61-A2C2-46E7-ADF8-7025C12C7B0C</string>
+			<string>13031413-AD28-4E43-9114-684938EBA26B</string>
+			<string>C68749CC-F81B-4175-983E-2A010B2100A8</string>
+			<string>58B7FE50-DDC3-4A59-82F4-D1CE235DCCD5</string>
+			<string>2B02E68D-3459-4103-977A-2709092796BA</string>
+			<string>70BA04AB-5379-4CCB-A213-552B813697CC</string>
+			<string>E693E43D-A909-4E64-B38B-292FBA32AEFD</string>
+			<string>A78DFE6D-2E08-4317-AD8F-7F07DE6F3457</string>
+		</array>
+		<key>submenus</key>
+		<dict/>
+	</dict>
+	<key>name</key>
+	<string>agavi</string>
+	<key>ordering</key>
+	<array>
+		<string>FB719929-554A-4FDC-9C6A-82184E6CC948</string>
+		<string>9A99F82F-DB0C-47F6-89DB-5A5196D34601</string>
+		<string>F187F0C7-F11A-4C55-8E39-A2E15BF20C42</string>
+		<string>852E3F33-5DF2-4192-A603-1227510AE15A</string>
+		<string>2D68FD61-A2C2-46E7-ADF8-7025C12C7B0C</string>
+		<string>13031413-AD28-4E43-9114-684938EBA26B</string>
+		<string>C68749CC-F81B-4175-983E-2A010B2100A8</string>
+		<string>58B7FE50-DDC3-4A59-82F4-D1CE235DCCD5</string>
+		<string>2B02E68D-3459-4103-977A-2709092796BA</string>
+		<string>70BA04AB-5379-4CCB-A213-552B813697CC</string>
+		<string>E693E43D-A909-4E64-B38B-292FBA32AEFD</string>
+		<string>A78DFE6D-2E08-4317-AD8F-7F07DE6F3457</string>
+	</array>
+	<key>uuid</key>
+	<string>A5726E8B-ABD1-4CC9-A31E-3C686B42DB50</string>
+</dict>
+</plist>

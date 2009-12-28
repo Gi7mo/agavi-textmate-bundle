@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>require_cmd agavi
+
+modulename=$(CocoaDialog inputbox --title "module name" \
+    --informative-text "please enter the module name:" \
+    --button1 "Okay" --button2 "Cancel")
+
+[[ $(head -n1 &lt;&lt;&lt;"$modulename") == "2" ]] &amp;&amp; exit_discard
+
+modulename=$(tail -n1 &lt;&lt;&lt;"$modulename")
+
+actionnames=$(CocoaDialog inputbox --title "action name" \
+    --informative-text "name of action:" \
+    --button1 "Okay" --button2 "Cancel")
+
+[[ $(head -n1 &lt;&lt;&lt;"$actionnames") == "2" ]] &amp;&amp; exit_discard
+
+actionnames=$(tail -n1 &lt;&lt;&lt;"$actionnames")
+
+viewnames=$(CocoaDialog inputbox --title "view name" \
+    --informative-text "name of view:" \
+    --button1 "Okay" --button2 "Cancel")
+
+[[ $(head -n1 &lt;&lt;&lt;"$viewnames") == "2" ]] &amp;&amp; exit_discard
+
+viewnames=$(tail -n1 &lt;&lt;&lt;"$viewnames")
+
+
+cd "$TM_PROJECT_DIRECTORY"
+agavi -D module.name "$modulename" --logger phing.listener.DefaultLogger module-create
+agavi -D module.name "$modulename" -D action.name "$actionnames" --logger phing.listener.DefaultLogger action-create
+agavi -D module.name "$modulename" -D action.name "$actionnames" -D view.name "$viewnames" --logger phing.listener.DefaultLogger view-create
+agavi -D module.name "$modulename" -D action.name "$actionnames" -D view.name "$viewnames" --logger phing.listener.DefaultLogger view-template-create
+
+
+rescan_project</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@A</string>
+	<key>name</key>
+	<string>module-wizard</string>
+	<key>output</key>
+	<string>openAsNewDocument</string>
+	<key>uuid</key>
+	<string>852E3F33-5DF2-4192-A603-1227510AE15A</string>
+</dict>
+</plist>

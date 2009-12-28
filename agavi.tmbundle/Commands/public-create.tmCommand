@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>require_cmd agavi
+
+environment=$(CocoaDialog inputbox --title "bootstrap environment" \
+    --informative-text "please enter the environment to bootstrap:" \
+    --button1 "Okay" --button2 "Cancel")
+
+[[ $(head -n1 &lt;&lt;&lt;"$environment") == "2" ]] &amp;&amp; exit_discard
+
+environment=$(tail -n1 &lt;&lt;&lt;"$environment")
+
+htaccess=$(CocoaDialog inputbox --title ".htaccess" \
+    --informative-text "create apache2 .htaccess file [y|n]:" \
+    --button1 "Okay" --button2 "Cancel")
+
+[[ $(head -n1 &lt;&lt;&lt;"$htaccess") == "2" ]] &amp;&amp; exit_discard
+
+htaccess=$(tail -n1 &lt;&lt;&lt;"$htaccess")
+
+cd "$TM_PROJECT_DIRECTORY"
+agavi -D public.environment "$environment" -D target.public-create.create-htaccess "$htaccess" --logger phing.listener.DefaultLogger public-create
+
+rescan_project</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@A</string>
+	<key>name</key>
+	<string>public-create</string>
+	<key>output</key>
+	<string>openAsNewDocument</string>
+	<key>uuid</key>
+	<string>58B7FE50-DDC3-4A59-82F4-D1CE235DCCD5</string>
+</dict>
+</plist>

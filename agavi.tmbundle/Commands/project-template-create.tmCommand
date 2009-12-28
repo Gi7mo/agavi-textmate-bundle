@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>require_cmd agavi
+
+templatename=$(CocoaDialog inputbox --title "template name" \
+    --informative-text "please enter the template name:" \
+    --button1 "Okay" --button2 "Cancel")
+
+[[ $(head -n1 &lt;&lt;&lt;"$templatename") == "2" ]] &amp;&amp; exit_discard
+
+templatename=$(tail -n1 &lt;&lt;&lt;"$templatename")
+
+templateext=$(CocoaDialog inputbox --title "template extension" \
+    --informative-text "please enter the template extension:" \
+    --button1 "Okay" --button2 "Cancel")
+
+[[ $(head -n1 &lt;&lt;&lt;"$templateext") == "2" ]] &amp;&amp; exit_discard
+
+templateext=$(tail -n1 &lt;&lt;&lt;"$templateext")
+
+cd "$TM_PROJECT_DIRECTORY"
+agavi -D template.name "$templatename" -D template.extension "$templateext" --logger phing.listener.DefaultLogger project-template-create
+
+rescan_project</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@A</string>
+	<key>name</key>
+	<string>project-template-create</string>
+	<key>output</key>
+	<string>openAsNewDocument</string>
+	<key>uuid</key>
+	<string>C68749CC-F81B-4175-983E-2A010B2100A8</string>
+</dict>
+</plist>

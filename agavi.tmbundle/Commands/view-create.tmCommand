@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>require_cmd agavi
+require_cmd grep
+require_cmd sed
+
+modulenames () {
+	agavi --logger phing.listener.DefaultLogger module-list | grep "agavi.display-modules" | sed "s/\[agavi\.display-modules\] //"
+}
+actionnames () {
+	agavi -D module.name "$modulename" --logger phing.listener.DefaultLogger action-list | grep "agavi.display-actions" | sed "s/\[agavi\.display-actions\] //"
+}
+
+modulename=$(osascript &lt;&lt;-APPLESCRIPT
+    tell app "TextMate"
+        activate
+        set AppleScript's text item delimiters to "
+"
+        set someText to "$(modulenames)"
+        set someText to someText's text items
+        choose from list someText with title "Select module" with prompt "Select module"
+    end tell
+APPLESCRIPT)
+
+[[ $(head -n1 &lt;&lt;&lt;"$modulename") == false ]] &amp;&amp; exit_discard
+
+actionname=$(osascript &lt;&lt;-APPLESCRIPT
+    tell app "TextMate"
+        activate
+        set AppleScript's text item delimiters to "
+"
+        set someText to "$(actionnames)"
+        set someText to someText's text items
+        choose from list someText with title "Select action" with prompt "Select action"
+    end tell
+APPLESCRIPT)
+
+[[ $(head -n1 &lt;&lt;&lt;"$actionname") == false ]] &amp;&amp; exit_discard
+
+viewname=$(CocoaDialog inputbox --title "view name" \
+    --informative-text "please enter the view name:" \
+    --button1 "Okay" --button2 "Cancel")
+
+[[ $(head -n1 &lt;&lt;&lt;"$viewname") == "2" ]] &amp;&amp; exit_discard
+
+viewname=$(tail -n1 &lt;&lt;&lt;"$viewname")
+
+cd "$TM_PROJECT_DIRECTORY"
+agavi -D module.name "$modulename" -D action.name "$actionname" -D view.name "$viewname" --logger phing.listener.DefaultLogger view-create
+
+rescan_project</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>@A</string>
+	<key>name</key>
+	<string>view-create</string>
+	<key>output</key>
+	<string>openAsNewDocument</string>
+	<key>uuid</key>
+	<string>E693E43D-A909-4E64-B38B-292FBA32AEFD</string>
+</dict>
+</plist>

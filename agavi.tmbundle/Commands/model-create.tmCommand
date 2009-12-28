@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>require_cmd agavi
+require_cmd grep
+require_cmd sed
+
+modulenames () {
+	agavi --logger phing.listener.DefaultLogger module-list | grep "agavi.display-modules" | sed "s/\[agavi\.display-modules\] //"
+}
+
+modulename=$(osascript &lt;&lt;-APPLESCRIPT
+    tell app "TextMate"
+        activate
+        set AppleScript's text item delimiters to "
+"
+        set someText to "$(modulenames)"
+        set someText to someText's text items
+        choose from list someText with title "Select module" with prompt "Select module"
+    end tell
+APPLESCRIPT)
+
+[[ $(head -n1 &lt;&lt;&lt;"$modulename") == false ]] &amp;&amp; exit_discard
+
+modelname=$(CocoaDialog inputbox --title "model name" \
+    --informative-text "please enter the model name:" \
+    --button1 "Okay" --button2 "Cancel")
+
+[[ $(head -n1 &lt;&lt;&lt;"$modelname") == "2" ]] &amp;&amp; exit_discard
+
+modelname=$(tail -n1 &lt;&lt;&lt;"$modelname")
+cd "$TM_PROJECT_DIRECTORY"
+agavi -D module.name "$modulename" -D model.name "$modelname" --logger phing.listener.DefaultLogger model-create
+
+rescan_project</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@A</string>
+	<key>name</key>
+	<string>model-create</string>
+	<key>output</key>
+	<string>openAsNewDocument</string>
+	<key>uuid</key>
+	<string>F187F0C7-F11A-4C55-8E39-A2E15BF20C42</string>
+</dict>
+</plist>
